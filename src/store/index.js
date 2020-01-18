@@ -65,6 +65,12 @@ export default new Vuex.Store({
     },
     resetRoundPoints(state) {
       state.roundInfo.points = 0;
+    },
+    resetTeamAPlayers(state) {
+      state.teamA = [];
+    },
+    resetTeamBPlayers(state) {
+      state.teamB = [];
     }
   },
   actions: {
@@ -92,6 +98,8 @@ export default new Vuex.Store({
       commit("updatePointsTeamB", 0);
       dispatch("resetRound");
       dispatch("startRound");
+      commit("resetTeamAPlayers");
+      commit("resetTeamBPlayers");
     }
   },
   modules: {}
