@@ -14,7 +14,6 @@
     >
       Buzz!
     </button>
-    <p>{{ first }}</p>
   </div>
 </template>
 

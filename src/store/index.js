@@ -71,6 +71,11 @@ export default new Vuex.Store({
     },
     resetTeamBPlayers(state) {
       state.teamB = [];
+    },
+    enhanceSurvey(state) {
+      state.surveyResponse.payload.forEach(obj => {
+        obj.show = false;
+      });
     }
   },
   actions: {

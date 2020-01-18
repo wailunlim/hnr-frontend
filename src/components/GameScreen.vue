@@ -37,6 +37,7 @@ export default {
   mounted() {
     console.log("mounted");
     this.$store.dispatch("getGameData").then(() => {
+      this.$store.commit("enhanceSurvey");
       this.$store.dispatch("startRound");
     });
   }

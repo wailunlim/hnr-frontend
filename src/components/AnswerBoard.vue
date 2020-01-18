@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5 outer">
     <div class="row">
       <div class="col-6 ans">{{ one }}</div>
       <div class="col-6 ans">{{ two }}</div>
@@ -25,28 +25,28 @@ export default {
   props: ["survey"],
   computed: {
     one() {
-      return this.survey[0];
+      return this.survey[0] && this.survey[0].show ? this.survey[0].name : "?";
     },
     two() {
-      return this.survey[1];
+      return this.survey[1] && this.survey[1].show ? this.survey[1].name : "?";
     },
     three() {
-      return this.survey[2];
+      return this.survey[2] && this.survey[2].show ? this.survey[2].name : "?";
     },
     four() {
-      return this.survey[3];
+      return this.survey[3] && this.survey[3].show ? this.survey[3].name : "?";
     },
     five() {
-      return this.survey[4];
+      return this.survey[4] && this.survey[4].show ? this.survey[4].name : "?";
     },
     six() {
-      return this.survey[5];
+      return this.survey[5] && this.survey[5].show ? this.survey[5].name : "?";
     },
     seven() {
-      return this.survey[6];
+      return this.survey[6] && this.survey[6].show ? this.survey[6].name : "?";
     },
     eight() {
-      return this.survey[7];
+      return this.survey[7] && this.survey[7].show ? this.survey[7].name : "?";
     }
   }
 };
@@ -55,5 +55,9 @@ export default {
 <style scoped>
 .ans {
   font-size: 2em;
+}
+
+.outer {
+  border: 2px solid black;
 }
 </style>
