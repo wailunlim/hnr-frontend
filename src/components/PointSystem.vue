@@ -1,13 +1,53 @@
-<template> <div></div> </template>
+<template>
+  <div id="pointSystem">
+    <reactive-bar-chart :chart-data="chartData"></reactive-bar-chart>
+  </div>
+</template>
 
 <script>
-// import { Bar } from "vue-chartjs";
+import ReactiveBarChart from "@/ReactiveBarChart.js";
+export default {
+  name: "App",
+  components: {
+    ReactiveBarChart
+  },
+  data() {
+    return {
+      chartData: null,
+      myStyles: {
+        height: '300px',
+        width: '100%',
+        position: 'relative',
+      },
+      responsive: true,
+      maintainAspectRatio: true,
+      height: 300,
+    };
+  },
+  methods: {
+    generateData() {
+      let newArray = [];
+      newArray.push(this.$store.state.pointsTeamA);
+      newArray.push(this.$store.state.pointsTeamB);
 
-// export default {
-//   extends: Bar,
-//   props: ["chartdata", "options"],
-//   mounted() {
-//     this.renderChart(data, options);
-//   }
-// };
+      this.chartData = {
+        labels: ["Team A", "Team B"],
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: newArray
+          }
+        ]
+      };
+    }
+  },
+  mounted() {
+    setInterval(this.generateData, 20);
+  }
+};
 </script>
+
+<style scoped>
+
+</style>

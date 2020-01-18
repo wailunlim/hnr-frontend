@@ -9,8 +9,8 @@ export default new Vuex.Store({
     survey: [],
     teamA: ["Alice", "Bobby"],
     teamB: ["Charlie", "Delta"],
-    pointsTeamA: 0,
-    pointsTeamB: 0,
+    pointsTeamA: 6,
+    pointsTeamB: 6,
     roundInfo: {
       isFirstTurn: true,
       control: "A",
