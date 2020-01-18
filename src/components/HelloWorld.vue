@@ -104,7 +104,9 @@
     <h1>{{ msg }}</h1>
     <img src="../assets/samuraiLogo.png" />
     <div>
-      <b-button variant="info" size="lg" @click="initialiseGamePlay">Play</b-button>
+      <b-button variant="info" size="lg" @click="initialiseGamePlay"
+        >Play</b-button
+      >
     </div>
   </div>
 </template>
@@ -142,6 +144,6 @@ a {
 
 img {
   height: 30%;
-  width:30%;
+  width: 30%;
 }
 </style>
