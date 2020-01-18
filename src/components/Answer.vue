@@ -3,6 +3,9 @@
     <h2 class="mt-3">{{ timeRemaining }}</h2>
     <p>{{ answer }}</p>
     <input v-model="answer" />
+    <div>
+      <b-button variant="success" @click="compareAnswer">Submit</b-button>
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,11 @@ export default {
       if (timeLeft < 0) {
         console.log(" < 0");
       }
+    }
+  },
+  methods: {
+    compareAnswer() {
+      this.$store.dispatch("allocatePoint", this.answer);
     }
   }
 };
