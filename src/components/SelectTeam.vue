@@ -55,7 +55,6 @@ export default {
     addToTeamA() {
       this.$store.commit("addMemberTeamA", this.teamAPlayer);
       this.teamAPlayer = "";
-
     },
     addToTeamB() {
       this.$store.commit("addMemberTeamB", this.teamBPlayer);

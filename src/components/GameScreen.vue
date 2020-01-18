@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <p>{{ survey }}</p>
     <div>
       <img :src="$store.state.imageLink" />
     </div>
@@ -32,6 +31,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getGameData");
+    // setInterval(() => this.$store.dispatch("startRound"), 5000);
   }
 };
 </script>
