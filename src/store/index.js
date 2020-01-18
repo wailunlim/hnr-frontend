@@ -97,6 +97,14 @@ export default new Vuex.Store({
       dispatch("resetRound");
       commit("resetTeamAPlayers");
       commit("resetTeamBPlayers");
+    },
+    allocatePoint({ commit, state }, answer) {
+      const roundId = state.roundInfo.roundId;
+      state.surveyResponse.payload[roundId].array.forEach(element => {
+        if (answer === element.name) {
+          commit("addToRoundPoints", element.confidence);
+        }
+      });
     }
   },
   modules: {}

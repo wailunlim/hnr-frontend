@@ -3,6 +3,9 @@
     <h2 class="my-5">Give your answer in: {{ timeRemaining }}</h2>
     <p>{{ answer }}</p>
     <input v-model="answer" />
+    <div>
+      <b-button variant="success" @click="compareAnswer">Submit</b-button>
+    </div>
   </div>
 </template>
 
@@ -19,6 +22,11 @@ export default {
     setInterval(() => {
       this.timeRemaining -= 1;
     }, 1000);
+  },
+  methods: {
+    compareAnswer() {
+      this.$store.dispatch("allocatePoint", this.answer);
+    }
   }
 };
 </script>
