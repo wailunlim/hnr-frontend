@@ -15,13 +15,13 @@ export default {
     return {
       chartData: null,
       myStyles: {
-        height: '300px',
-        width: '100%',
-        position: 'relative',
+        height: "300px",
+        width: "100%",
+        position: "relative"
       },
       responsive: true,
       maintainAspectRatio: true,
-      height: 300,
+      height: 300
     };
   },
   methods: {
@@ -48,6 +48,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
