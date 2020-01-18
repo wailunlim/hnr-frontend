@@ -4,6 +4,7 @@
       <img :src="$store.state.imageLink" />
     </div>
     <AnswerBoard :survey="survey" />
+    <h2>{{ $store.state.roundInfo.control }}</h2>
     <Buzzer v-if="toBuzz" />
     <Answer v-if="toAnswer" />
   </div>
@@ -37,7 +38,6 @@ export default {
   mounted() {
     console.log("mounted");
     this.$store.dispatch("getGameData").then(() => {
-      this.$store.commit("enhanceSurvey");
       this.$store.dispatch("startRound");
     });
   }

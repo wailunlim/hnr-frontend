@@ -14,14 +14,15 @@ export default new Vuex.Store({
     survey: [],
     teamA: ["Alice", "Bobby"],
     teamB: ["Charlie", "Delta"],
-    pointsTeamA: 6,
-    pointsTeamB: 6,
+    pointsTeamA: 0,
+    pointsTeamB: 0,
     roundInfo: {
       roundId: 0,
-      isFirstTurn: true, // perhaps getter, check if roundId === 0
       control: null,
       currentPlayer: null,
-      points: 0
+      points: 0,
+      streak: 0,
+      steal: false
     }
   },
   mutations: {
@@ -41,7 +42,7 @@ export default new Vuex.Store({
       state.teamB.push(player);
     },
     addToRoundPoints(state, points) {
-      state.points += points;
+      state.roundInfo.points += points;
     },
     updateImageLink(state, link) {
       state.imageLink = link;
@@ -72,10 +73,27 @@ export default new Vuex.Store({
     resetTeamBPlayers(state) {
       state.teamB = [];
     },
-    enhanceSurvey(state) {
-      state.surveyResponse.payload.forEach(obj => {
-        obj.show = false;
-      });
+    displayAnswer(state, index) {
+      const roundId = state.roundInfo.roundId;
+      state.surveyResponse.payload[roundId].info[index].show = true;
+    },
+    reverseControl(state) {
+      if (state.roundInfo.control === "teamA") {
+        state.roundInfo.control = "teamB";
+      } else {
+        state.roundInfo.control = "teamA";
+      }
+      // opportunity to steal
+      if (state.roundInfo.streak > 0) state.roundInfo.steal = true;
+    },
+    increaseStreak(state) {
+      state.roundInfo.streak += 1;
+    },
+    resetStreak(state) {
+      state.roundInfo.streak = 0;
+    },
+    resetSteal(state) {
+      state.roundInfo.steal = false;
     }
   },
   actions: {
@@ -90,13 +108,14 @@ export default new Vuex.Store({
       const roundId = state.roundInfo.roundId;
       commit("updateImageLink", state.surveyResponse.payload[roundId].url);
       commit("updateSurvey", state.surveyResponse.payload[roundId].info);
-      // commit("incrementRoundId"); // don't increment here first
     },
     resetRound({ commit }) {
       commit("resetRoundId");
       commit("setControl", null);
       commit("setCurrentPlayer", null);
       commit("resetRoundPoints");
+      commit("resetStreak");
+      commit("resetSteal");
     },
     initialiseGame({ commit, dispatch }) {
       commit("updatePointsTeamA", 0);
@@ -106,13 +125,45 @@ export default new Vuex.Store({
       commit("resetTeamAPlayers");
       commit("resetTeamBPlayers");
     },
-    allocatePoint({ commit, state }, answer) {
+    check({ commit, state, dispatch }, answer) {
       const roundId = state.roundInfo.roundId;
-      state.surveyResponse.payload[roundId].array.forEach(element => {
-        if (answer === element.name) {
-          commit("addToRoundPoints", element.confidence);
+      let guess = false;
+      state.surveyResponse.payload[roundId].info.forEach((obj, index) => {
+        if (obj.name === answer && !obj.show) {
+          guess = true;
+          commit("displayAnswer", index);
+          commit("addToRoundPoints", obj.confidence);
+          commit("increaseStreak");
         }
       });
+
+      // the team gets 3 in a row, or steals from a team successfully
+      if (state.roundInfo.streak === 3 || (guess && state.roundInfo.steal)) {
+        dispatch("endRound");
+      }
+
+      if (state.roundInfo.steal && !guess) {
+        commit("reverseControl");
+        dispatch("endRound");
+        return;
+      }
+
+      // the person didn't guess right
+      if (!guess) commit("reverseControl");
+    },
+    endRound({ commit, state, dispatch }) {
+      const winningTeam = state.roundInfo.control;
+      const roundPoints = state.roundInfo.points;
+      if (winningTeam === "teamA") {
+        commit("updatePointsTeamA", state.pointsTeamA + roundPoints);
+      } else {
+        commit("updatePointsTeamB", state.pointsTeamB + roundPoints);
+      }
+
+      // proceed to next round.
+      dispatch("resetRound");
+      commit("incrementRoundId");
+      dispatch("startRound");
     }
   },
   modules: {}
