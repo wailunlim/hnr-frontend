@@ -9,8 +9,8 @@ export default new Vuex.Store({
     gameData: null,
     imageLink: undefined,
     survey: [],
-    teamA: [],
-    teamB: [],
+    teamA: ["Alice", "Bobby"],
+    teamB: ["Charlie", "Delta"],
     pointsTeamA: 0,
     pointsTeamB: 0,
     roundInfo: {

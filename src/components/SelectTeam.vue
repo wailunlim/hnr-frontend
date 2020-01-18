@@ -3,23 +3,41 @@
     <div>
       <b-container class="containerTeamA">
         <h1>Team A</h1>
-        <h2 class="team" v-for="member in TeamA" :key="member">{{ member }}</h2>
-        <div class="plusicon">
+        <h2 class="team" v-for="member in teamA" :key="member">{{ member }}</h2>
+        <b-row>
+          <b-col class="col-10">
+            <b-form-input
+              v-model="teamAPlayer"
+              placeholder="Enter player's name"
+            ></b-form-input>
+          </b-col>
           <p class="h5 mb-2">
-            <b-icon-plus class="btn-secondary"></b-icon-plus>
+            <b-icon-plus
+              class="btn-secondary"
+              @click="addToTeamA"
+            ></b-icon-plus>
           </p>
-        </div>
+        </b-row>
       </b-container>
     </div>
     <div>
       <b-container class="containerTeamB">
         <h1>Team B</h1>
-        <h2 v-for="member in TeamB" :key="member">{{ member }}</h2>
-        <div class="plusicon">
+        <h2 v-for="member in teamB" :key="member">{{ member }}</h2>
+        <b-row>
+          <b-col class="col-10">
+            <b-form-input
+              v-model="teamBPlayer"
+              placeholder="Enter player's name"
+            ></b-form-input>
+          </b-col>
           <p class="h5 mb-2">
-            <b-icon-plus class="btn-secondary"></b-icon-plus>
+            <b-icon-plus
+              class="btn-secondary"
+              @click="addToTeamB"
+            ></b-icon-plus>
           </p>
-        </div>
+        </b-row>
       </b-container>
     </div>
   </div>
@@ -27,11 +45,30 @@
 
 <script>
 export default {
-  data() {
+  data: function() {
     return {
-      TeamA: ["Alice", "Bobby"],
-      TeamB: ["Charlie", "Delta"]
+      teamAPlayer: "",
+      teamBPlayer: ""
     };
+  },
+  methods: {
+    addToTeamA() {
+      this.$store.commit("addMemberTeamA", this.teamAPlayer);
+      this.teamAPlayer = "";
+
+    },
+    addToTeamB() {
+      this.$store.commit("addMemberTeamB", this.teamBPlayer);
+      this.teamBPlayer = "";
+    }
+  },
+  computed: {
+    teamA() {
+      return this.$store.state.teamA;
+    },
+    teamB() {
+      return this.$store.state.teamB;
+    }
   }
 };
 </script>
@@ -61,5 +98,9 @@ h1 {
 
 h2 {
   font-size: 15pt;
+}
+
+h5 mb-2 {
+  align-content: center;
 }
 </style>
