@@ -14,8 +14,8 @@ export default new Vuex.Store({
     survey: [],
     teamA: ["Alice", "Bobby"],
     teamB: ["Charlie", "Delta"],
-    pointsTeamA: 6,
-    pointsTeamB: 6,
+    pointsTeamA: 20,
+    pointsTeamB: 19,
     roundInfo: {
       roundId: 0,
       isFirstTurn: true, // perhaps getter, check if roundId === 0
@@ -71,7 +71,7 @@ export default new Vuex.Store({
     },
     resetTeamBPlayers(state) {
       state.teamB = [];
-    }
+    },
   },
   actions: {
     async getGameData({ commit }) {
