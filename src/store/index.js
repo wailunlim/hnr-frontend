@@ -7,8 +7,8 @@ export default new Vuex.Store({
   state: {
     imageLink: undefined,
     survey: [],
-    teamA: [],
-    teamB: [],
+    teamA: ["Alice", "Bobby"],
+    teamB: ["Charlie", "Delta"],
     pointsTeamA: 0,
     pointsTeamB: 0,
     roundInfo: {
@@ -29,10 +29,10 @@ export default new Vuex.Store({
       state.pointsTeamB = points;
     },
     addMemberTeamA(state, player) {
-      state.teamA.append(player);
+      state.teamA.push(player);
     },
     addMemberTeamB(state, player) {
-      state.teamB.append(player);
+      state.teamB.push(player);
     },
     addToRoundPoints(state, points) {
       state.points += points;
