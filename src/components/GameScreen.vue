@@ -2,7 +2,7 @@
   <div class="container">
     <p>{{ survey }}</p>
     <div>
-      <img src="../assets/logo.png" />
+      <img :src="$store.state.imageLink" />
     </div>
     <AnswerBoard :survey="survey" />
     <Buzzer />
@@ -29,6 +29,9 @@ export default {
     survey() {
       return this.$store.state.survey;
     }
+  },
+  mounted() {
+    this.$store.dispatch("getGameData");
   }
 };
 </script>
