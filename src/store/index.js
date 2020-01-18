@@ -14,8 +14,8 @@ export default new Vuex.Store({
     survey: [],
     teamA: ["Alice", "Bobby"],
     teamB: ["Charlie", "Delta"],
-    pointsTeamA: 0,
-    pointsTeamB: 0,
+    pointsTeamA: 6,
+    pointsTeamB: 6,
     roundInfo: {
       roundId: 0,
       isFirstTurn: true, // perhaps getter, check if roundId === 0
