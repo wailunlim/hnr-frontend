@@ -1,9 +1,10 @@
 <template>
   <div class="container">
+    <p>{{ survey }}</p>
     <div>
       <img src="../assets/logo.png" />
     </div>
-    <AnswerBoard :answers="answers" />
+    <AnswerBoard :survey="survey" />
     <Buzzer />
     <Answer />
     <Wait />
@@ -24,10 +25,10 @@ export default {
     Buzzer,
     Answer
   },
-  data() {
-    return {
-      answers: [1, 2, 3, 4, 5, 6, 7, 8]
-    };
+  computed: {
+    survey() {
+      return this.$store.state.survey;
+    }
   }
 };
 </script>

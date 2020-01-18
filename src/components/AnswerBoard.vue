@@ -22,31 +22,31 @@
 <script>
 export default {
   name: "AnswerBoard.vue",
-  props: ["answers"],
+  props: ["survey"],
   computed: {
     one() {
-      return this.answers[0];
+      return this.survey[0];
     },
     two() {
-      return this.answers[1];
+      return this.survey[1];
     },
     three() {
-      return this.answers[2];
+      return this.survey[2];
     },
     four() {
-      return this.answers[3];
+      return this.survey[3];
     },
     five() {
-      return this.answers[4];
+      return this.survey[4];
     },
     six() {
-      return this.answers[5];
+      return this.survey[5];
     },
     seven() {
-      return this.answers[6];
+      return this.survey[6];
     },
     eight() {
-      return this.answers[7];
+      return this.survey[7];
     }
   }
 };

@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    imageLink: undefined,
+    survey: [],
     teamA: [],
     teamB: [],
     pointsTeamA: 0,
@@ -16,7 +18,26 @@ export default new Vuex.Store({
       points: 0
     }
   },
-  mutations: {},
+  mutations: {
+    updateSurvey(state, payload) {
+      state.survey = payload;
+    },
+    updatePointsTeamA(state, points) {
+      state.pointsTeamA = points;
+    },
+    updatePointsTeamB(state, points) {
+      state.pointsTeamB = points;
+    },
+    addMemberTeamA(state, player) {
+      state.teamA.append(player);
+    },
+    addMemberTeamB(state, player) {
+      state.teamB.append(player);
+    },
+    addToRoundPoints(state, points) {
+      state.points += points;
+    }
+  },
   actions: {},
   modules: {}
 });
