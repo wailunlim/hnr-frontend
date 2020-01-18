@@ -4,9 +4,8 @@
       <img :src="$store.state.imageLink" />
     </div>
     <AnswerBoard :survey="survey" />
-    <Buzzer />
-    <Answer />
-    <Wait />
+    <Buzzer v-if="toBuzz" />
+    <Answer v-if="toAnswer" />
   </div>
 </template>
 
@@ -14,12 +13,10 @@
 import AnswerBoard from "./AnswerBoard.vue";
 import Buzzer from "./Buzzer.vue";
 import Answer from "./Answer.vue";
-import Wait from "./Wait.vue";
 
 export default {
   name: "GameScreen",
   components: {
-    Wait,
     AnswerBoard,
     Buzzer,
     Answer
@@ -27,11 +24,21 @@ export default {
   computed: {
     survey() {
       return this.$store.state.survey;
+    },
+    toBuzz() {
+      // if no one has control, it's buzz time
+      return !this.$store.state.roundInfo.control;
+    },
+    toAnswer() {
+      // if a team has control, they would answer
+      return this.$store.state.roundInfo.control;
     }
   },
   mounted() {
-    this.$store.dispatch("getGameData");
-    // setInterval(() => this.$store.dispatch("startRound"), 5000);
+    console.log("mounted");
+    this.$store.dispatch("getGameData").then(() => {
+      this.$store.dispatch("startRound");
+    });
   }
 };
 </script>
@@ -39,6 +46,9 @@ export default {
 <style scoped>
 .survey-box {
   border: 1px solid black;
+  width: 50%;
+}
+img {
   width: 50%;
 }
 </style>

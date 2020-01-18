@@ -19,7 +19,7 @@ export default new Vuex.Store({
     roundInfo: {
       roundId: 0,
       isFirstTurn: true, // perhaps getter, check if roundId === 0
-      control: "A",
+      control: null,
       currentPlayer: null,
       points: 0
     }
@@ -68,16 +68,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getGameData({ commit }) {
-      const data = await axios
-        .get("http://192.168.1.94:3000/getinformation")
-        .then(res => res.data);
-      commit("updateSurveyResponse", data);
+    getGameData({ commit }) {
+      return axios.get("http://localhost:3000/getinformation").then(res => {
+        console.log(res.data);
+        commit("updateSurveyResponse", res.data);
+        return res.data;
+      });
     },
     startRound({ commit, state }) {
       const roundId = state.roundInfo.roundId;
       commit("updateImageLink", state.surveyResponse.payload[roundId].url);
-      commit("incrementRoundId");
+      commit("updateSurvey", state.surveyResponse.payload[roundId].info);
+      // commit("incrementRoundId"); // don't increment here first
     },
     resetRound({ commit }) {
       commit("resetRoundId");
@@ -89,6 +91,7 @@ export default new Vuex.Store({
       commit("updatePointsTeamA", 0);
       commit("updatePointsTeamB", 0);
       dispatch("resetRound");
+      dispatch("startRound");
     }
   },
   modules: {}
