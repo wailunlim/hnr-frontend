@@ -8,7 +8,7 @@
         <!--<button @click="uploadFile">Test</button>-->
         <img src="../assets/samuraiLogo.png" />
         <div>
-            <b-button variant="info" size="lg" @click="initialiseGamePlay">Play</b-button>
+            <router-link to="/game">Play</router-link>
         </div>
     </div>
 </template>
@@ -26,6 +26,9 @@
         props: {
             msg: String
         },
+        mounted() {
+    this.$store.dispatch("initialiseGame");
+  },
         methods: {
             initialiseGamePlay() {
                 this.$store.dispatch("initialiseGame");
@@ -42,6 +45,7 @@
             }
         }
     };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

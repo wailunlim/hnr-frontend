@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <div>
-      <img :src="$store.state.imageLink" />
+    <LoadingScreen v-if="$store.state.loading" />
+    <div class="row d-flex justify-content-center" v-else>
+      <div class="col-4">
+        <img :src="$store.state.imageLink" />
+      </div>
     </div>
     <AnswerBoard :survey="survey" />
     <h2>{{ $store.state.roundInfo.control }}</h2>
@@ -14,13 +17,15 @@
 import AnswerBoard from "./AnswerBoard.vue";
 import Buzzer from "./Buzzer.vue";
 import Answer from "./Answer.vue";
+import LoadingScreen from "./LoadingScreen.vue";
 
 export default {
   name: "GameScreen",
   components: {
     AnswerBoard,
     Buzzer,
-    Answer
+    Answer,
+    LoadingScreen
   },
   computed: {
     survey() {
@@ -45,11 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.survey-box {
-  border: 1px solid black;
-  width: 50%;
-}
 img {
-  width: 50%;
+  width: 100%;
 }
 </style>

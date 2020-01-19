@@ -11,6 +11,7 @@ export default new Vuex.Store({
       payload: null,
       length: 0
     },
+    loading: false,
     imageLink: undefined,
     survey: [],
     teamA: ["Alice", "Bobby"],
@@ -24,7 +25,9 @@ export default new Vuex.Store({
       points: 0,
       streak: 0,
       steal: false
-    }
+    },
+    showTick: false,
+    showCross: false
   },
   mutations: {
     updateSurvey(state, payload) {
@@ -95,13 +98,28 @@ export default new Vuex.Store({
     },
     resetSteal(state) {
       state.roundInfo.steal = false;
+    },
+    setTick(state, bool) {
+      state.showTick = bool;
+    },
+    setCross(state, bool) {
+      state.showCross = bool;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    resetLoading(state) {
+      state.loading = false;
     }
   },
   actions: {
     getGameData({ commit }) {
+      commit("setLoading");
+      console.log("hi");
       return axios.get("http://localhost:3000/getinformation").then(res => {
         console.log(res.data);
         commit("updateSurveyResponse", res.data);
+        commit("resetLoading");
         return res.data;
       });
     },
@@ -122,7 +140,6 @@ export default new Vuex.Store({
       commit("updatePointsTeamA", 0);
       commit("updatePointsTeamB", 0);
       dispatch("resetRound");
-      dispatch("startRound");
       commit("resetTeamAPlayers");
       commit("resetTeamBPlayers");
     },
@@ -137,6 +154,12 @@ export default new Vuex.Store({
           commit("increaseStreak");
         }
       });
+
+      if (guess) {
+        dispatch("flashTick");
+      } else {
+        dispatch("flashCross");
+      }
 
       // the team gets 3 in a row, or steals from a team successfully
       if (state.roundInfo.streak === 3 || (guess && state.roundInfo.steal)) {
@@ -165,6 +188,14 @@ export default new Vuex.Store({
       dispatch("resetRound");
       commit("incrementRoundId");
       dispatch("startRound");
+    },
+    flashTick({ commit }) {
+      commit("setTick", true);
+      setTimeout(() => commit("setTick", false), 1000);
+    },
+    flashCross({ commit }) {
+      commit("setCross", true);
+      setTimeout(() => commit("setCross", false), 1000);
     }
   },
   modules: {}
