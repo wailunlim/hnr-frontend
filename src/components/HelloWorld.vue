@@ -1,12 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <button @click="initialiseGamePlay">Test</button>
     <img src="../assets/samuraiLogo.png" />
     <div>
-      <b-button variant="info" size="lg " @click="initialiseGamePlay"
-        >Play</b-button
-      >
+      <router-link to="/game">Play</router-link>
     </div>
   </div>
 </template>
@@ -17,10 +13,8 @@ export default {
   props: {
     msg: String
   },
-  methods: {
-    initialiseGamePlay() {
-      this.$store.dispatch("initialiseGame");
-    }
+  mounted() {
+    this.$store.dispatch("initialiseGame");
   }
 };
 </script>

@@ -139,7 +139,6 @@ export default new Vuex.Store({
       commit("updatePointsTeamA", 0);
       commit("updatePointsTeamB", 0);
       dispatch("resetRound");
-      dispatch("startRound");
       commit("resetTeamAPlayers");
       commit("resetTeamBPlayers");
     },

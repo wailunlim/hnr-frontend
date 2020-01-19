@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="row d-flex justify-content-center">
+    <LoadingScreen v-if="$store.state.loading" />
+    <div class="row d-flex justify-content-center" v-else>
       <div class="col-4">
         <img :src="$store.state.imageLink" />
       </div>
@@ -16,13 +17,15 @@
 import AnswerBoard from "./AnswerBoard.vue";
 import Buzzer from "./Buzzer.vue";
 import Answer from "./Answer.vue";
+import LoadingScreen from "./LoadingScreen.vue";
 
 export default {
   name: "GameScreen",
   components: {
     AnswerBoard,
     Buzzer,
-    Answer
+    Answer,
+    LoadingScreen
   },
   computed: {
     survey() {
