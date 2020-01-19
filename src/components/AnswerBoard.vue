@@ -70,10 +70,12 @@ export default {
 
 <style scoped>
 .ans {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .outer {
-  border: 2px solid black;
+  border: 2px;
+  background-color: whitesmoke;
+  border-radius: 10px;
 }
 </style>

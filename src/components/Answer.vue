@@ -36,9 +36,11 @@ export default {
 <style scoped>
 input {
   width: 50%;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: bold;
-  border: 1px solid red;
+  border: 0.5px solid black;
+  background-color: whitesmoke;
+  border-radius: 10px;
 }
 
 h2 {
