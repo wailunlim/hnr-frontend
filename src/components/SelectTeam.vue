@@ -77,6 +77,7 @@ export default {
     },
     startGame() {
       this.$store.dispatch("getGameData");
+      this.$router.push({ name: "game" });
     }
   },
   computed: {
