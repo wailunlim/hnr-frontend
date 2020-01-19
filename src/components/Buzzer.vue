@@ -2,29 +2,28 @@
   <div class="d-flex justify-content-around mt-5">
     <button
       type="button"
-      @click="first ? false : (first = 'teamA')"
+      @click="first ? false : updateControl('teamA')"
       class="btn btn-danger btn-lg col-4"
     >
       Buzz!
     </button>
     <button
       type="button"
-      @click="first ? false : (first = 'teamB')"
+      @click="first ? false : updateControl('teamB')"
       class="btn btn-primary btn-lg col-4"
     >
       Buzz!
     </button>
-    <p>{{ first }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "Buzzer",
-  data() {
-    return {
-      first: null
-    };
+  computed: {
+    first() {
+      return this.$store.state.roundInfo.control;
+    }
   },
   mounted() {
     window.addEventListener("keypress", e => {
@@ -36,6 +35,11 @@ export default {
         this.first = "teamB";
       }
     });
+  },
+  methods: {
+    updateControl(team) {
+      this.$store.commit("setControl", team);
+    }
   }
 };
 </script>

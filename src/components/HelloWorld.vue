@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <!-- <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
@@ -99,6 +99,15 @@
         >
       </li>
     </ul>
+  </div> -->
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <img src="../assets/samuraiLogo.png" />
+    <div>
+      <b-button variant="info" size="lg" @click="initialiseGamePlay"
+        >Play</b-button
+      >
+    </div>
   </div>
 </template>
 
@@ -107,6 +116,11 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  methods: {
+    initialiseGamePlay() {
+      this.$store.dispatch("initialiseGame");
+    }
   }
 };
 </script>
@@ -126,5 +140,10 @@ li {
 }
 a {
   color: #42b983;
+}
+
+img {
+  height: 30%;
+  width: 30%;
 }
 </style>
