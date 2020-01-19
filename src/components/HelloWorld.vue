@@ -6,13 +6,13 @@
       accept="image/jpeg,image/png"
       @change="uploadFile($event)"
     />
-    <!--<b-form-input 
+    <!--<b-form-input
            v-model="teamAPlayer"
            placeholder="Enter player's name"></b-form-input>-->
     <!--<button @click="uploadFile">Test</button>-->
     <img src="../assets/samuraiLogo.png" />
     <div>
-      <router-link to="/game">Play</router-link>
+      <router-link to="/select-team">Play</router-link>
     </div>
   </div>
 </template>
