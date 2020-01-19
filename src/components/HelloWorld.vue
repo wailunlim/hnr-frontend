@@ -5,11 +5,8 @@
       type="file"
       accept="image/jpeg,image/png"
       @change="uploadFile($event)"
+      multiple
     />
-    <!--<b-form-input
-           v-model="teamAPlayer"
-           placeholder="Enter player's name"></b-form-input>-->
-    <!--<button @click="uploadFile">Test</button>-->
     <img src="../assets/samuraiLogo.png" />
     <div>
       <router-link to="/select-team">Play</router-link>
@@ -20,6 +17,7 @@
 <script>
 //import storage from "../store/db.js";
 import * as firebase from "firebase";
+const axios = require("axios");
 
 const db = firebase
   .initializeApp({ storageBucket: "samurai-e00ed.appspot.com" })
@@ -37,16 +35,48 @@ export default {
     initialiseGamePlay() {
       this.$store.dispatch("initialiseGame");
     },
-    uploadFile(e) {
+    async uploadFile(e) {
       //console.log("upload file called with value");
-      const file = e.target.files[0];
+      //var length = e.files.length;
+      //console.log(length);
+      //const file = e.target.files[0];
+      //const file2 = e.target.files[1];
       //console.log(file);
-      db.ref("images/" + file.name)
-        .put(file)
-        .then(response => {
-          console.log(response);
+      //console.log(file2);
+      var list = [];
+      for (var i = 0; i < 10; i++) {
+        var name = e.target.files[i].name;
+        console.log(name);
+        await db
+          .ref("images/" + name)
+          .put(e.target.files[i])
+          .then(response => {
+            console.log(response);
+          })
+          .then(async () => {
+            console.log(name);
+            var temp = await db.ref("images/" + name).getDownloadURL();
+            console.log("url is " + temp);
+            list.push(temp);
+            console.log(list);
+          })
+          .catch(err => console.log(err));
+      }
+
+      await axios({
+        method: "post",
+        url: "http://192.168.1.94:3000/sendimages",
+        data: {
+          url: list
+        }
+      })
+        .then(function(response) {
+          return response.data.tags;
         })
-        .catch(err => console.log(err));
+        .catch(function(error) {
+          console.log(error);
+          return -1;
+        });
     }
   }
 };
