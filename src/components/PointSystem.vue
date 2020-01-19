@@ -1,6 +1,5 @@
 <template>
   <div id="pointSystem">
-    <p>fk</p>
     <reactive-bar-chart :chart-data="chartData" :width="300" :height="150" />
   </div>
 </template>
