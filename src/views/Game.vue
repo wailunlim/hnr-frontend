@@ -36,7 +36,6 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
 <style scoped>
 .info {
   position: fixed;
@@ -46,4 +45,3 @@ export default {
   z-index: 5;
 }
 </style>
-======= >>>>>>> 2293581927d0d947c5331bed58616e9d12f4a119
