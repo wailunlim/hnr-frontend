@@ -1,15 +1,16 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <input
+    <h1 class="mt-5">{{ msg }}</h1>
+    <img src="../assets/samuraiLogo.png" />
+    <div>
+      <router-link class="btn btn-info" to="/select-team">Play</router-link>
+    </div>
+    <div class="upload">
+      <input
       type="file"
       accept="image/jpeg,image/png"
       @change="uploadFile($event)"
-      multiple
-    />
-    <img src="../assets/samuraiLogo.png" />
-    <div>
-      <router-link to="/select-team">Play</router-link>
+      multiple />
     </div>
   </div>
 </template>
@@ -36,6 +37,7 @@ export default {
       this.$store.dispatch("initialiseGame");
     },
     async uploadFile(e) {
+      this.$store.commit("useUserFiles");
       //console.log("upload file called with value");
       //var length = e.files.length;
       //console.log(length);
@@ -102,5 +104,9 @@ a {
 img {
   height: 30%;
   width: 30%;
+}
+
+.upload {
+  margin-top: 20px;
 }
 </style>

@@ -138,13 +138,17 @@ export default new Vuex.Store({
     },
     resetAnswerBox(state) {
       state.showAnswerBox = true;
+    },
+    useUserFiles(state) {
+      state.toggleUpload = true;
     }
   },
   actions: {
-    getGameData({ commit }) {
+    getGameData({ commit, state }) {
       commit("setLoading");
       console.log("hi");
-      return axios.get("http://localhost:3000/getinformation").then(res => {
+      const url = state.toggleUpload ? "http://localhost:3000/getinformationfirebase" : "http://localhost:3000/getinformation";
+      return axios.get(url).then(res => {
         console.log(res.data);
         commit("updateSurveyResponse", res.data);
         commit("resetLoading");
