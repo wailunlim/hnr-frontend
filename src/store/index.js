@@ -26,7 +26,8 @@ export default new Vuex.Store({
       steal: false
     },
     showTick: false,
-    showCross: false
+    showCross: false,
+    stats: false
   },
   mutations: {
     updateSurvey(state, payload) {
@@ -109,6 +110,9 @@ export default new Vuex.Store({
     },
     resetLoading(state) {
       state.loading = false;
+    },
+    setStats(state, bool) {
+      state.stats = bool;
     }
   },
   actions: {
@@ -128,7 +132,6 @@ export default new Vuex.Store({
       commit("updateSurvey", state.surveyResponse.payload[roundId].info);
     },
     resetRound({ commit }) {
-      commit("resetRoundId");
       commit("setControl", null);
       commit("setCurrentPlayer", null);
       commit("resetRoundPoints");
@@ -184,6 +187,7 @@ export default new Vuex.Store({
       }
 
       // proceed to next round.
+      dispatch("flashStats");
       dispatch("resetRound");
       commit("incrementRoundId");
       dispatch("startRound");
@@ -195,6 +199,10 @@ export default new Vuex.Store({
     flashCross({ commit }) {
       commit("setCross", true);
       setTimeout(() => commit("setCross", false), 1000);
+    },
+    flashStats({ commit }) {
+      commit("setStats", true);
+      setTimeout(() => commit("setStats", false), 7000);
     }
   },
   modules: {}
