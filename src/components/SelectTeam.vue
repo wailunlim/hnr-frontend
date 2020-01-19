@@ -62,10 +62,16 @@ export default {
   },
   methods: {
     addToTeamA() {
+      if (this.teamAPlayer === "") {
+        return;
+      }
       this.$store.commit("addMemberTeamA", this.teamAPlayer);
       this.teamAPlayer = "";
     },
     addToTeamB() {
+      if (this.teamBPlayer === "") {
+        return;
+      }
       this.$store.commit("addMemberTeamB", this.teamBPlayer);
       this.teamBPlayer = "";
     },

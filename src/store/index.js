@@ -223,8 +223,12 @@ export default new Vuex.Store({
       dispatch("flashAnswers").then(() => {
         dispatch("flashStats");
         dispatch("resetRound");
-        commit("incrementRoundId");
-        dispatch("startRound");
+        if (state.roundInfo.roundId < 10) {
+          commit("incrementRoundId");
+          dispatch("startRound");
+        } else {
+          dispatch("showStats");
+        }
       });
     },
     flashTick({ commit }) {
@@ -251,6 +255,9 @@ export default new Vuex.Store({
           resolve(true);
         }, 8000);
       });
+    },
+    showStats({ commit }) {
+      commit("setStats", true);
     }
   },
   modules: {}
