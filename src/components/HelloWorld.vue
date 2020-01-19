@@ -1,22 +1,51 @@
 <template>
-  <div class="hello">
-    <img src="../assets/samuraiLogo.png" />
-    <div>
-      <router-link to="/game">Play</router-link>
+    <div class="hello">
+        <h1>{{ msg }}</h1>
+        <input type="file" accept="image/jpeg,image/png" @change="uploadFile($event);">
+        <!--<b-form-input 
+           v-model="teamAPlayer"
+           placeholder="Enter player's name"></b-form-input>-->
+        <!--<button @click="uploadFile">Test</button>-->
+        <img src="../assets/samuraiLogo.png" />
+        <div>
+            <router-link to="/game">Play</router-link>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  },
-  mounted() {
+    //import storage from "../store/db.js";
+    import * as firebase from "firebase";
+
+    const db = firebase
+        .initializeApp({ storageBucket: "samurai-e00ed.appspot.com" })
+        .storage();
+
+    export default {
+        name: "HelloWorld",
+        props: {
+            msg: String
+        },
+        mounted() {
     this.$store.dispatch("initialiseGame");
-  }
-};
+  },
+        methods: {
+            initialiseGamePlay() {
+                this.$store.dispatch("initialiseGame");
+            },
+            uploadFile(e) {
+                //console.log("upload file called with value");
+                const file = e.target.files[0];
+                //console.log(file);
+                db.ref('images/' + file.name).put(file)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(err => console.log(err))
+            }
+        }
+    };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
