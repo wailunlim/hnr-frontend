@@ -1,6 +1,6 @@
 <template>
   <div class="Loading" v-if="isLoading">
-    <h2>Game Loading</h2>
+    <h2>Please wait while we prepare your images ... </h2>
     <img src="../assets/loading.gif" />
   </div>
 </template>
