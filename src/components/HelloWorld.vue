@@ -4,8 +4,8 @@
     <button @click="initialiseGamePlay">Test</button>
     <img src="../assets/samuraiLogo.png" />
     <div>
-      <b-button variant="info" size="lg" @click="initialiseGamePlay"
-        >Play</b-button
+      <b-button variant="info" size="lg " @click="initialiseGamePlay"
+      >Play</b-button
       >
     </div>
   </div>
