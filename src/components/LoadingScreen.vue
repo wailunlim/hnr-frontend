@@ -7,12 +7,12 @@
 
 <script>
 export default {
-    computed: {
-        isLoading() {
-            return this.$store.state.loading;
-        }
+  computed: {
+    isLoading() {
+      return this.$store.state.loading;
     }
-}
+  }
+};
 </script>
 
 <style scoped>

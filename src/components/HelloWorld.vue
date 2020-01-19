@@ -5,7 +5,7 @@
     <img src="../assets/samuraiLogo.png" />
     <div>
       <b-button variant="info" size="lg " @click="initialiseGamePlay"
-      >Play</b-button
+        >Play</b-button
       >
     </div>
   </div>
