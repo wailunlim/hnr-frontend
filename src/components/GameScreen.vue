@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <div>
-      <img :src="$store.state.imageLink" />
+    <div class="row d-flex justify-content-center">
+      <div class="col-4">
+        <img :src="$store.state.imageLink" />
+      </div>
     </div>
     <AnswerBoard :survey="survey" />
     <h2>{{ $store.state.roundInfo.control }}</h2>
@@ -45,11 +47,9 @@ export default {
 </script>
 
 <style scoped>
-.survey-box {
-  border: 1px solid black;
-  width: 50%;
-}
 img {
-  width: 50%;
+  width: 100%;
 }
+
+
 </style>

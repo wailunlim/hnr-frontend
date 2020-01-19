@@ -1,6 +1,6 @@
 <template>
   <div id="pointSystem">
-    <reactive-bar-chart :chart-data="chartData" width=300 height=150></reactive-bar-chart>
+    <reactive-bar-chart :chart-data="chartData" :width="300" :height="150" />
   </div>
 </template>
 
@@ -13,11 +13,11 @@ export default {
   },
   data() {
     return {
-      chartData: null,
-      responsive: false,
+      chartData: {},
+      responsive: false
     };
   },
-  
+
   methods: {
     generateData() {
       let newArray = [];
@@ -36,7 +36,7 @@ export default {
       };
     }
   },
-  mounted() {
+  created() {
     setInterval(this.generateData, 2000);
   }
 };
