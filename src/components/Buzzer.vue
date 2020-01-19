@@ -39,6 +39,11 @@ export default {
   methods: {
     updateControl(team) {
       this.$store.commit("setControl", team);
+      if(team === 'teamA') {
+        this.$store.commit("setCurrentPlayer", this.$store.state.teamA[this.$store.state.teamApointer]);
+      } else {
+        this.$store.commit("setCurrentPlayer", this.$store.state.teamB[this.$store.state.teamBpointer]);
+      }
     }
   }
 };

@@ -13,8 +13,10 @@ export default new Vuex.Store({
     loading: false,
     imageLink: undefined,
     survey: [],
-    teamA: ["Alice", "Bobby"],
-    teamB: ["Charlie", "Delta"],
+    teamA: [],
+    teamB: [],
+    teamApointer: 0,
+    teamBpointer: 0,
     pointsTeamA: 0,
     pointsTeamB: 0,
     roundInfo: {
@@ -109,6 +111,16 @@ export default new Vuex.Store({
     },
     resetLoading(state) {
       state.loading = false;
+    },
+    nextPlayerA(state) {
+      state.teamApointer = (state.teamApointer+1)%(state.teamA.length);
+    },
+    nextPlayerB(state) {
+      state.teamBpointer = (state.teamBpointer+1)%(state.teamB.length);
+    },
+    resetPointers(state) {
+      state.teamApointer = 0;
+      state.teamBpointer = 0;
     }
   },
   actions: {
@@ -134,6 +146,7 @@ export default new Vuex.Store({
       commit("resetRoundPoints");
       commit("resetStreak");
       commit("resetSteal");
+      commit("resetPointers");
     },
     initialiseGame({ commit, dispatch }) {
       commit("updatePointsTeamA", 0);
@@ -150,7 +163,7 @@ export default new Vuex.Store({
           guess = true;
           commit("displayAnswer", index);
           commit("addToRoundPoints", obj.confidence);
-          commit("increaseStreak");
+          commit("increaseStreak"); 
         }
       });
 
@@ -173,6 +186,14 @@ export default new Vuex.Store({
 
       // the person didn't guess right
       if (!guess) commit("reverseControl");
+
+      if(state.roundInfo.control == "teamA"){
+        commit("nextPlayerA")
+        commit("setCurrentPlayer", state.teamA[state.teamApointer]);
+      } else {
+        commit("nextPlayerB")
+        commit("setCurrentPlayer", state.teamB[state.teamBpointer]);
+      }
     },
     endRound({ commit, state, dispatch }) {
       const winningTeam = state.roundInfo.control;
