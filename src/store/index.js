@@ -10,11 +10,14 @@ export default new Vuex.Store({
       payload: null,
       length: 0
     },
+    showAnswerBox: true,
     loading: false,
     imageLink: undefined,
     survey: [],
-    teamA: ["Alice", "Bobby"],
-    teamB: ["Charlie", "Delta"],
+    teamA: [],
+    teamB: [],
+    teamApointer: 0,
+    teamBpointer: 0,
     pointsTeamA: 0,
     pointsTeamB: 0,
     roundInfo: {
@@ -26,7 +29,8 @@ export default new Vuex.Store({
       steal: false
     },
     showTick: false,
-    showCross: false
+    showCross: false,
+    stats: false
   },
   mutations: {
     updateSurvey(state, payload) {
@@ -109,6 +113,30 @@ export default new Vuex.Store({
     },
     resetLoading(state) {
       state.loading = false;
+    },
+    setStats(state, bool) {
+      state.stats = bool;
+    },
+    nextPlayerA(state) {
+      state.teamApointer = (state.teamApointer + 1) % state.teamA.length;
+    },
+    nextPlayerB(state) {
+      state.teamBpointer = (state.teamBpointer + 1) % state.teamB.length;
+    },
+    resetPointers(state) {
+      state.teamApointer = 0;
+      state.teamBpointer = 0;
+    },
+    setAllShowTrue(state) {
+      state.survey.forEach(obj => {
+        obj.show = true;
+      });
+    },
+    hideAnswerBox(state) {
+      state.showAnswerBox = false;
+    },
+    resetAnswerBox(state) {
+      state.showAnswerBox = true;
     }
   },
   actions: {
@@ -128,12 +156,12 @@ export default new Vuex.Store({
       commit("updateSurvey", state.surveyResponse.payload[roundId].info);
     },
     resetRound({ commit }) {
-      commit("resetRoundId");
       commit("setControl", null);
       commit("setCurrentPlayer", null);
       commit("resetRoundPoints");
       commit("resetStreak");
       commit("resetSteal");
+      commit("resetPointers");
     },
     initialiseGame({ commit, dispatch }) {
       commit("updatePointsTeamA", 0);
@@ -173,6 +201,14 @@ export default new Vuex.Store({
 
       // the person didn't guess right
       if (!guess) commit("reverseControl");
+
+      if (state.roundInfo.control === "teamA") {
+        commit("nextPlayerA");
+        commit("setCurrentPlayer", state.teamA[state.teamApointer]);
+      } else {
+        commit("nextPlayerB");
+        commit("setCurrentPlayer", state.teamB[state.teamBpointer]);
+      }
     },
     endRound({ commit, state, dispatch }) {
       const winningTeam = state.roundInfo.control;
@@ -184,9 +220,16 @@ export default new Vuex.Store({
       }
 
       // proceed to next round.
-      dispatch("resetRound");
-      commit("incrementRoundId");
-      dispatch("startRound");
+      dispatch("flashAnswers").then(() => {
+        dispatch("flashStats");
+        dispatch("resetRound");
+        if (state.roundInfo.roundId < 10) {
+          commit("incrementRoundId");
+          dispatch("startRound");
+        } else {
+          dispatch("showStats");
+        }
+      });
     },
     flashTick({ commit }) {
       commit("setTick", true);
@@ -195,6 +238,26 @@ export default new Vuex.Store({
     flashCross({ commit }) {
       commit("setCross", true);
       setTimeout(() => commit("setCross", false), 1000);
+    },
+    flashStats({ commit }) {
+      commit("setStats", true);
+      setTimeout(() => commit("setStats", false), 7000);
+    },
+    showAll({ commit }) {
+      commit("setAllShowTrue");
+    },
+    flashAnswers({ commit }) {
+      commit("setAllShowTrue", true);
+      commit("hideAnswerBox");
+      return new Promise(resolve => {
+        setTimeout(() => {
+          commit("resetAnswerBox");
+          resolve(true);
+        }, 8000);
+      });
+    },
+    showStats({ commit }) {
+      commit("setStats", true);
     }
   },
   modules: {}

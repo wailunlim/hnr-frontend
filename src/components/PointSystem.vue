@@ -28,7 +28,7 @@ export default {
         labels: ["Team A", "Team B"],
         datasets: [
           {
-            label: "Data One",
+            label: "Points",
             backgroundColor: "#f87979",
             data: newArray
           }

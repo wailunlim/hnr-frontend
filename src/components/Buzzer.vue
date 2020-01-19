@@ -29,16 +29,27 @@ export default {
     window.addEventListener("keypress", e => {
       const pressed = String.fromCharCode(e.keyCode);
       if (pressed === "q" && !this.first) {
-        this.first = "teamA";
+        this.updateControl("teamA");
       }
       if (pressed === "p" && !this.first) {
-        this.first = "teamB";
+        this.updateControl("teamB");
       }
     });
   },
   methods: {
     updateControl(team) {
       this.$store.commit("setControl", team);
+      if (team === "teamA") {
+        this.$store.commit(
+          "setCurrentPlayer",
+          this.$store.state.teamA[this.$store.state.teamApointer]
+        );
+      } else {
+        this.$store.commit(
+          "setCurrentPlayer",
+          this.$store.state.teamB[this.$store.state.teamBpointer]
+        );
+      }
     }
   }
 };

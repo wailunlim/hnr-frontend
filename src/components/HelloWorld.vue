@@ -7,10 +7,9 @@
       @change="uploadFile($event)"
       multiple
     />
-
     <img src="../assets/samuraiLogo.png" />
     <div>
-      <router-link to="/game">Play</router-link>
+      <router-link to="/select-team">Play</router-link>
     </div>
   </div>
 </template>
