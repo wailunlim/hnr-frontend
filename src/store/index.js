@@ -10,6 +10,7 @@ export default new Vuex.Store({
       payload: null,
       length: 0
     },
+    loading: false,
     imageLink: undefined,
     survey: [],
     teamA: ["Alice", "Bobby"],
@@ -94,13 +95,22 @@ export default new Vuex.Store({
     },
     resetSteal(state) {
       state.roundInfo.steal = false;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    resetLoading(state) {
+      state.loading = false;
     }
   },
   actions: {
     getGameData({ commit }) {
+      commit("setLoading");
+      console.log("hi");
       return axios.get("http://localhost:3000/getinformation").then(res => {
         console.log(res.data);
         commit("updateSurveyResponse", res.data);
+        commit("resetLoading");
         return res.data;
       });
     },
