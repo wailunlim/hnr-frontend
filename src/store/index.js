@@ -210,7 +210,7 @@ export default new Vuex.Store({
       // proceed to next round.
       dispatch("flashStats");
       dispatch("resetRound");
-      if (state.roundInfo.roundId < 10) {
+      if (state.roundInfo.roundId < 9) {
         commit("incrementRoundId");
         dispatch("startRound");
       } else {
