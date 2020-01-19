@@ -67,7 +67,7 @@ export default {
 
       await axios({
         method: "post",
-        url: "http://192.168.1.94:3000/sendimages",
+        url: "http://localhost:3000/sendimages",
         data: {
           url: list
         }
