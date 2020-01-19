@@ -10,12 +10,14 @@
           <b-row>
             <b-col class="col-10">
               <b-form-input
-                v-model="teamAPlayer" v-if="$store.state.teamA.length < 5"
+                v-model="teamAPlayer"
+                v-if="$store.state.teamA.length < 5"
                 placeholder="Enter player's name"
               ></b-form-input>
             </b-col>
             <p class="h5 mb-2">
-              <b-icon-plus  v-if="$store.state.teamA.length < 5"
+              <b-icon-plus
+                v-if="$store.state.teamA.length < 5"
                 class="btn-secondary"
                 @click="addToTeamA"
               ></b-icon-plus>
@@ -30,12 +32,14 @@
           <b-row>
             <b-col class="col-10">
               <b-form-input
-                v-model="teamBPlayer" v-if="$store.state.teamB.length < 5"
-                placeholder="Enter player's name" 
+                v-model="teamBPlayer"
+                v-if="$store.state.teamB.length < 5"
+                placeholder="Enter player's name"
               ></b-form-input>
             </b-col>
             <p class="h5 mb-2">
-              <b-icon-plus v-if="$store.state.teamB.length < 5"
+              <b-icon-plus
+                v-if="$store.state.teamB.length < 5"
                 class="btn-secondary"
                 @click="addToTeamB"
               ></b-icon-plus>
@@ -58,10 +62,16 @@ export default {
   },
   methods: {
     addToTeamA() {
+      if (this.teamAPlayer === "") {
+        return;
+      }
       this.$store.commit("addMemberTeamA", this.teamAPlayer);
       this.teamAPlayer = "";
     },
     addToTeamB() {
+      if (this.teamBPlayer === "") {
+        return;
+      }
       this.$store.commit("addMemberTeamB", this.teamBPlayer);
       this.teamBPlayer = "";
     },

@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -114,10 +113,10 @@ export default new Vuex.Store({
       state.loading = false;
     },
     nextPlayerA(state) {
-      state.teamApointer = (state.teamApointer+1)%(state.teamA.length);
+      state.teamApointer = (state.teamApointer + 1) % state.teamA.length;
     },
     nextPlayerB(state) {
-      state.teamBpointer = (state.teamBpointer+1)%(state.teamB.length);
+      state.teamBpointer = (state.teamBpointer + 1) % state.teamB.length;
     },
     resetPointers(state) {
       state.teamApointer = 0;
@@ -164,7 +163,7 @@ export default new Vuex.Store({
           guess = true;
           commit("displayAnswer", index);
           commit("addToRoundPoints", obj.confidence);
-          commit("increaseStreak"); 
+          commit("increaseStreak");
         }
       });
 
@@ -188,11 +187,11 @@ export default new Vuex.Store({
       // the person didn't guess right
       if (!guess) commit("reverseControl");
 
-      if(state.roundInfo.control == "teamA"){
-        commit("nextPlayerA")
+      if (state.roundInfo.control == "teamA") {
+        commit("nextPlayerA");
         commit("setCurrentPlayer", state.teamA[state.teamApointer]);
       } else {
-        commit("nextPlayerB")
+        commit("nextPlayerB");
         commit("setCurrentPlayer", state.teamB[state.teamBpointer]);
       }
     },

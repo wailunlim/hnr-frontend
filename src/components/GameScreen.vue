@@ -7,7 +7,11 @@
       </div>
     </div>
     <AnswerBoard :survey="survey" />
-    <h2 v-if="$store.state.roundInfo.control !== null">{{ $store.state.roundInfo.control }}:{{ $store.state.roundInfo.currentPlayer}}</h2>
+    <h2 v-if="$store.state.roundInfo.control !== null">
+      {{ $store.state.roundInfo.control }}:{{
+        $store.state.roundInfo.currentPlayer
+      }}
+    </h2>
     <Buzzer v-if="toBuzz" />
     <Answer v-if="toAnswer" />
   </div>
