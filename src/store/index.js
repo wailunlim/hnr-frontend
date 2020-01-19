@@ -10,6 +10,7 @@ export default new Vuex.Store({
       payload: null,
       length: 0
     },
+    showAnswerBox: true,
     loading: false,
     imageLink: undefined,
     survey: [],
@@ -125,6 +126,17 @@ export default new Vuex.Store({
     resetPointers(state) {
       state.teamApointer = 0;
       state.teamBpointer = 0;
+    },
+    setAllShowTrue(state) {
+      state.survey.forEach(obj => {
+        obj.show = true;
+      });
+    },
+    hideAnswerBox(state) {
+      state.showAnswerBox = false;
+    },
+    resetAnswerBox(state) {
+      state.showAnswerBox = true;
     }
   },
   actions: {
@@ -190,7 +202,7 @@ export default new Vuex.Store({
       // the person didn't guess right
       if (!guess) commit("reverseControl");
 
-      if (state.roundInfo.control == "teamA") {
+      if (state.roundInfo.control === "teamA") {
         commit("nextPlayerA");
         commit("setCurrentPlayer", state.teamA[state.teamApointer]);
       } else {
@@ -208,10 +220,12 @@ export default new Vuex.Store({
       }
 
       // proceed to next round.
-      dispatch("flashStats");
-      dispatch("resetRound");
-      commit("incrementRoundId");
-      dispatch("startRound");
+      dispatch("flashAnswers").then(() => {
+        dispatch("flashStats");
+        dispatch("resetRound");
+        commit("incrementRoundId");
+        dispatch("startRound");
+      });
     },
     flashTick({ commit }) {
       commit("setTick", true);
@@ -224,6 +238,19 @@ export default new Vuex.Store({
     flashStats({ commit }) {
       commit("setStats", true);
       setTimeout(() => commit("setStats", false), 7000);
+    },
+    showAll({ commit }) {
+      commit("setAllShowTrue");
+    },
+    flashAnswers({ commit }) {
+      commit("setAllShowTrue", true);
+      commit("hideAnswerBox");
+      return new Promise(resolve => {
+        setTimeout(() => {
+          commit("resetAnswerBox");
+          resolve(true);
+        }, 8000);
+      });
     }
   },
   modules: {}

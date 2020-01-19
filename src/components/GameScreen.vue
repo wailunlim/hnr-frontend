@@ -8,15 +8,15 @@
           <img :src="$store.state.imageLink" />
         </div>
       </div>
+      <AnswerBoard :survey="survey" />
+      <h2 v-if="$store.state.roundInfo.control !== null">
+        {{ $store.state.roundInfo.control }}:{{
+          $store.state.roundInfo.currentPlayer
+        }}
+      </h2>
+      <Buzzer v-if="toBuzz" />
+      <Answer v-if="toAnswer && $store.state.showAnswerBox" />
     </div>
-    <AnswerBoard :survey="survey" />
-    <h2 v-if="$store.state.roundInfo.control !== null">
-      {{ $store.state.roundInfo.control }}:{{
-        $store.state.roundInfo.currentPlayer
-      }}
-    </h2>
-    <Buzzer v-if="toBuzz" />
-    <Answer v-if="toAnswer" />
   </div>
 </template>
 
