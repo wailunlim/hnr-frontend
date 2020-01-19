@@ -11,6 +11,7 @@ export default new Vuex.Store({
       length: 0
     },
     showAnswerBox: true,
+    toggleUpload: false,
     loading: false,
     imageLink: undefined,
     survey: [],
