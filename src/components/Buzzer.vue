@@ -29,10 +29,10 @@ export default {
     window.addEventListener("keypress", e => {
       const pressed = String.fromCharCode(e.keyCode);
       if (pressed === "q" && !this.first) {
-        this.first = "teamA";
+        this.updateControl("teamA");
       }
       if (pressed === "p" && !this.first) {
-        this.first = "teamB";
+        this.updateControl("teamB");
       }
     });
   },

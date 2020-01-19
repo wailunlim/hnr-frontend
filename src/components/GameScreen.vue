@@ -1,9 +1,12 @@
 <template>
-  <div class="container">
+  <div class="container my-5">
     <LoadingScreen v-if="$store.state.loading" />
-    <div class="row d-flex justify-content-center" v-else>
-      <div class="col-4">
-        <img :src="$store.state.imageLink" />
+    <PointSystem v-else-if="$store.state.stats" />
+    <div v-else>
+      <div class="row d-flex justify-content-center">
+        <div class="col-6">
+          <img :src="$store.state.imageLink" />
+        </div>
       </div>
     </div>
     <AnswerBoard :survey="survey" />
@@ -22,6 +25,7 @@ import AnswerBoard from "./AnswerBoard.vue";
 import Buzzer from "./Buzzer.vue";
 import Answer from "./Answer.vue";
 import LoadingScreen from "./LoadingScreen.vue";
+import PointSystem from "./PointSystem.vue";
 
 export default {
   name: "GameScreen",
@@ -29,7 +33,8 @@ export default {
     AnswerBoard,
     Buzzer,
     Answer,
-    LoadingScreen
+    LoadingScreen,
+    PointSystem
   },
   computed: {
     survey() {
