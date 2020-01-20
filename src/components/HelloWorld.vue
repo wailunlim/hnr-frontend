@@ -7,10 +7,11 @@
     </div>
     <div class="upload">
       <input
-      type="file"
-      accept="image/jpeg,image/png"
-      @change="uploadFile($event)"
-      multiple />
+        type="file"
+        accept="image/jpeg,image/png"
+        @change="uploadFile($event)"
+        multiple
+      />
     </div>
   </div>
 </template>
@@ -67,7 +68,7 @@ export default {
 
       await axios({
         method: "post",
-        url: "http://localhost:3000/sendimages",
+        url: "http://172.31.66.26:3000/sendimages",
         data: {
           url: list
         }

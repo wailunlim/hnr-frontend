@@ -147,7 +147,9 @@ export default new Vuex.Store({
     getGameData({ commit, state }) {
       commit("setLoading");
       console.log("hi");
-      const url = state.toggleUpload ? "http://localhost:3000/getinformationfirebase" : "http://localhost:3000/getinformation";
+      const url = state.toggleUpload
+        ? "http://localhost:3000/getinformationfirebase"
+        : "http://localhost:3000/getinformation";
       return axios.get(url).then(res => {
         console.log(res.data);
         commit("updateSurveyResponse", res.data);
